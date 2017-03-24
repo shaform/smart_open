@@ -35,6 +35,12 @@ IS_PY2 = (sys.version_info[0] == 2)
 
 if IS_PY2:
     import httplib
+
+    # functools.partial is unpickable in Python 2.6.
+    # Therefore, it is incompatible with multiprocessing.
+    # See https://bugs.python.org/issue5228.
+    # So in Python 2.6, we manually specify how to pickle the partial function.
+    # See https://mail.python.org/pipermail/python-dev/2009-February/086039.html.
     if sys.version_info[1] == 6:
         import copy_reg
 
